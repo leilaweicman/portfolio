@@ -1,0 +1,56 @@
+# Laravel
+/vendor
+/storage
+/storage/*.key
+/public/storage
+/public/hot
+/bootstrap/cache
+.phpunit.result.cache
+.phpunit.cache
+/storage/pail
+
+# Vite / Laravel Mix
+/public/build
+/public/js/
+/public/css/
+/vite.config.ts
+/vite.config.js
+
+# Environment files
+.env
+.env.*
+auth.json
+
+# Composer
+composer.lock
+
+# Node / Yarn / pnpm
+/node_modules
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+npm-debug.log
+yarn-error.log
+
+# Editor/IDE config
+/.idea
+/.vscode
+/.fleet
+/.nova
+/.zed
+
+# Tailwind / Prettier / ESLint
+.prettierrc
+.prettierignore
+eslint.config.js
+
+# Others
+components.json
+.phpactor.json
+Homestead.json
+Homestead.yaml
+
+# Optional editor config
+.editorconfig
+jsconfig.json
+tsconfig.json
