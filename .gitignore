@@ -26,8 +26,6 @@ composer.lock
 
 # Node / Yarn / pnpm
 /node_modules
-package-lock.json
-yarn.lock
 pnpm-lock.yaml
 npm-debug.log
 yarn-error.log
@@ -42,7 +40,6 @@ yarn-error.log
 # Tailwind / Prettier / ESLint
 .prettierrc
 .prettierignore
-eslint.config.js
 
 # Others
 components.json

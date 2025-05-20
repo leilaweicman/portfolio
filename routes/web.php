@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\ProjectController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -27,6 +28,13 @@ Route::get('/education', fn () => Inertia::render('Education'));
 Route::get('/projects', fn () => Inertia::render('Projects'));
 
 Route::get('/about', fn () => Inertia::render('About'));
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/projects', [ProjectController::class, 'index']);
+    Route::post('/admin/projects', [ProjectController::class, 'store']);
+    Route::put('/admin/projects/{id}', [ProjectController::class, 'update']);
+    Route::delete('/admin/projects/{id}', [ProjectController::class, 'destroy']);
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
