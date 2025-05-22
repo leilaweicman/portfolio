@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,6 +26,9 @@ class AppServiceProvider extends ServiceProvider
         Inertia::share([
             'flash' => fn () => [
                 'message' => session('message'),
+            ],
+            'auth' => fn () => [
+                'user' => Auth::user(),
             ],
         ]);
     }

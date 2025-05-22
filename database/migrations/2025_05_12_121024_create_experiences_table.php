@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('experiences', function (Blueprint $table) {
             $table->id();
-            $table->string('title'); // Ej: Software Engineer
+            $table->string('role');
             $table->string('company');
             $table->text('description');
             $table->string('location')->nullable();

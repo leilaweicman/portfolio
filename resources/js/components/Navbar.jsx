@@ -2,15 +2,20 @@ import React from 'react';
 import { Link, usePage } from '@inertiajs/react';
 
 export default function Navbar() {
-  const { url } = usePage();
+  const { url, props } = usePage();
+  const user = props.auth?.user;
 
   const links = [
     { name: 'Sobre mí', href: '/about' },
-    { name: 'Proyectos', href: '/projects' },
-    { name: 'Educación', href: '/education' },
     { name: 'Experiencia', href: '/experiences' },
+    { name: 'Educación', href: '/education' },
     { name: 'Tecnologías', href: '/technologies' },
+    { name: 'Proyectos', href: '/projects' },
   ];
+
+  if (user && user.is_admin) {
+    links.push({ name: 'Admin Proyectos', href: '/admin/projects' });
+  }
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import MainLayout from '../layouts/MainLayout';
+import { formatDate } from '@/utils/formatDate';
 
 export default function Education() {
   const [educations, setEducations] = useState([]);
@@ -31,12 +32,10 @@ export default function Education() {
                 {edu.institution}
                 {edu.type && ` — ${edu.type}`}
               </p>
-              {(edu.start_date || edu.end_date || edu.is_current) && (
-                <p className="text-sm text-gray-500">
-                  {edu.start_date}
-                  {edu.is_current ? ' - Actualidad' : edu.end_date ? ` - ${edu.end_date}` : ''}
-                </p>
-              )}
+              <p className="text-sm text-gray-500">
+                {formatDate(edu.start_date)} - {edu.is_current ? 'Actualidad' : formatDate(edu.end_date)}
+              </p>
+              
               {edu.location && <p className="text-sm text-gray-500">{edu.location}</p>}
               {edu.description && <p className="mt-2 text-gray-700">{edu.description}</p>}
             </div>

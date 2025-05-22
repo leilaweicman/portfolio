@@ -26,7 +26,7 @@ class EducationSeeder extends Seeder
                 'description' => null,
                 'location' => 'Barcelona, España',
                 'start_date' => '2025-04-22',
-                'end_date' => null,
+                'end_date' => '2025-05-29',
                 'is_current' => false,
             ],
         ]);
