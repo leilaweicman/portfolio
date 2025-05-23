@@ -4,7 +4,8 @@
 /storage/*.key
 /public/storage
 /public/hot
-/bootstrap/cache
+/bootstrap/cache/*.php
+!bootstrap/cache/.gitignore
 .phpunit.result.cache
 .phpunit.cache
 /storage/pail
