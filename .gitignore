@@ -14,11 +14,9 @@
 /public/js/
 /public/css/
 /vite.config.ts
-/vite.config.js
 
 # Environment files
 .env
-.env.*
 auth.json
 
 # Composer
