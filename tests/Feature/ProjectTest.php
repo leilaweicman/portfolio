@@ -12,26 +12,24 @@ class ProjectTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
-    public function admin_can_view_project_list()
+    public function test_admin_can_view_project_list()
     {
         $admin = User::factory()->create(['is_admin' => true]);
 
         $response = $this->actingAs($admin)->get('/admin/projects');
 
         $response->assertStatus(200);
+        $this->assertEquals(config('app.name'), '🚨 TESTING MODE 🚨');
     }
 
-    /** @test */
-    public function guest_cannot_access_admin_projects()
+    public function test_guest_cannot_access_admin_projects()
     {
         $response = $this->get('/admin/projects');
 
         $response->assertRedirect('/login');
     }
 
-    /** @test */
-    public function admin_can_create_a_project()
+    public function test_admin_can_create_a_project()
     {
         $admin = User::factory()->create(['is_admin' => true]);
 
@@ -50,8 +48,7 @@ class ProjectTest extends TestCase
         $this->assertDatabaseHas('projects', ['title' => 'Test Project']);
     }
 
-    /** @test */
-    public function admin_can_update_a_project()
+    public function test_admin_can_update_a_project()
     {
         $admin = User::factory()->create(['is_admin' => true]);
 
@@ -72,8 +69,7 @@ class ProjectTest extends TestCase
         $this->assertDatabaseHas('projects', ['title' => 'New title']);
     }
 
-    /** @test */
-    public function admin_can_delete_a_project()
+    public function test_admin_can_delete_a_project()
     {
         $admin = User::factory()->create(['is_admin' => true]);
 

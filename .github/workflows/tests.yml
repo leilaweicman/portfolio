@@ -37,12 +37,6 @@ jobs:
       - name: Build Assets
         run: npm run build
 
-      - name: Force move manifest.json
-        run: |
-          if [ -f public/build/.vite/manifest.json ]; then
-            mv public/build/.vite/manifest.json public/build/manifest.json
-          fi
-
       - name: Install Dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
 
