@@ -37,6 +37,9 @@ COPY --from=frontend /app /app
 # Install PHP dependencies (production only)
 RUN composer install --no-dev --optimize-autoloader
 
+# Create .env from example
+RUN cp .env.example .env
+
 # Generate Laravel key
 RUN php artisan key:generate
 
