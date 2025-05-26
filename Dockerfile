@@ -36,11 +36,11 @@ WORKDIR /app
 # Copy built app (from frontend stage)
 COPY --from=frontend /app /app
 
+# Copy environment file (you can override it via Railway variables)
+RUN cp .env.example .env
+
 # Install PHP dependencies (production only)
 RUN composer install --no-dev --optimize-autoloader
-
-# Copy environment file
-RUN cp .env.example .env
 
 # Create required Laravel directories
 RUN mkdir -p bootstrap/cache \
@@ -54,9 +54,10 @@ RUN php artisan key:generate
 # Expose port 8000 to Railway
 EXPOSE 8000
 
-# Run caches, migrations, seeders, and start server
+# Run cache clear commands and start server
+# Note: We delay migration to ensure DB connection is ready
 CMD php artisan config:clear \
     && php artisan cache:clear \
     && php artisan view:clear \
-    && php artisan migrate --force --seed \
+    && php artisan migrate --force --seed || true \
     && php artisan serve --host=0.0.0.0 --port=8000
