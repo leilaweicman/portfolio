@@ -25,7 +25,7 @@ FROM php:8.2-cli
 
 # Install PHP extensions and system dependencies
 RUN apt-get update && apt-get install -y \
-    libzip-dev zip unzip curl git libpng-dev libonig-dev \
+    libzip-dev zip unzip curl git \
     && docker-php-ext-install zip pdo pdo_mysql
 
 # Install Composer
@@ -39,10 +39,10 @@ COPY --from=frontend /app /app
 # Install PHP dependencies (production only)
 RUN composer install --no-dev --optimize-autoloader
 
-# Create .env from example
+# Copy environment file
 RUN cp .env.example .env
 
-# Create required Laravel cache and storage directories
+# Create required Laravel directories
 RUN mkdir -p bootstrap/cache \
     && mkdir -p storage/framework/views \
     && mkdir -p storage/framework/cache \
@@ -51,16 +51,12 @@ RUN mkdir -p bootstrap/cache \
 # Generate Laravel key
 RUN php artisan key:generate
 
-# Clear and rebuild caches
-RUN php artisan config:clear \
-    && php artisan cache:clear \
-    && php artisan view:clear
-
-# Run migrations and seeders
-RUN php artisan migrate --force --seed
-
 # Expose port 8000 to Railway
 EXPOSE 8000
 
-# Start Laravel server
-CMD php artisan serve --host=0.0.0.0 --port=8000
+# Run caches, migrations, seeders, and start server
+CMD php artisan config:clear \
+    && php artisan cache:clear \
+    && php artisan view:clear \
+    && php artisan migrate --force --seed \
+    && php artisan serve --host=0.0.0.0 --port=8000
