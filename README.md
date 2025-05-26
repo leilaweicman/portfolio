@@ -10,6 +10,7 @@ Incluye las páginas:
 - 💼 Experiencia
 - 🧠 Tecnologías
 - 📁 Proyectos
+- 🔐 Panel de administración (solo admins): CRUD de proyectos
 
 ---
 
@@ -59,6 +60,11 @@ php artisan serve
 npm run dev
 ```
 
+### 6. Ejecutar tests
+```bash
+php artisan test
+```
+
 ---
 
 ## 🗂 Estructura del proyecto
@@ -72,6 +78,8 @@ npm run dev
 │   │   └── Technology.php
 │   └── Http
 │       └── Controllers
+│           └── Admin
+│               ├── ProjectController.php
 │           └── Api
 │               ├── ProjectController.php
 │               ├── EducationController.php
