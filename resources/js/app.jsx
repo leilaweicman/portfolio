@@ -6,13 +6,11 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
 
 if (import.meta.env.PROD) {
-    (async () => {
-        await import('./Pages/About.jsx');
-        await import('./Pages/Projects.jsx');
-        await import('./Pages/Education.jsx');
-        await import('./Pages/Technologies.jsx');
-        await import('./Pages/Experiences.jsx');
-    })();
+    import('./Pages/About.jsx');
+    import('./Pages/Projects.jsx');
+    import('./Pages/Education.jsx');
+    import('./Pages/Technologies.jsx');
+    import('./Pages/Experiences.jsx');
 }
   
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
