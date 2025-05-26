@@ -16,7 +16,6 @@ COPY . .
 # Build frontend assets (Vite)
 RUN npm run build
 
-
 # ----------- BACKEND STAGE ------------
 # Use PHP 8.2 with CLI tools
 FROM php:8.2-cli
@@ -39,6 +38,11 @@ RUN composer install --no-dev --optimize-autoloader
 
 # Create .env from example
 RUN cp .env.example .env
+
+RUN mkdir -p bootstrap/cache \
+    && mkdir -p storage/framework/views \
+    && mkdir -p storage/framework/cache \
+    && mkdir -p storage/logs
 
 # Generate Laravel key
 RUN php artisan key:generate
