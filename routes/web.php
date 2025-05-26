@@ -6,7 +6,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', fn () => Inertia::render('About'))->name('home');
+Route::get('/', fn () => Inertia::render('About'));
 
 Route::get('/technologies', fn () => Inertia::render('Technologies'));
 

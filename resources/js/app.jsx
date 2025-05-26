@@ -4,6 +4,11 @@ import '../css/app.css';
 import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
+import './Pages/About.jsx';
+import './Pages/Projects.jsx';
+import './Pages/Education.jsx';
+import './Pages/Technologies.jsx';
+import './Pages/Experiences.jsx';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
