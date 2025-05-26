@@ -14,7 +14,10 @@ RUN npm ci
 COPY . .
 
 # Build frontend assets (Vite)
-RUN npm run build
+RUN npm run build && \
+    if [ -f public/build/.vite/manifest.json ]; then \
+      mv public/build/.vite/manifest.json public/build/manifest.json; \
+    fi
 
 # ----------- BACKEND STAGE ------------
 # Use PHP 8.2 with CLI tools
