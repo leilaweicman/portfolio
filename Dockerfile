@@ -54,8 +54,8 @@ RUN php artisan key:generate
 # Expose port 8000 to Railway
 EXPOSE 8000
 
-# TEMPORARY: Start interactive shell to debug
-CMD /bin/bash
+# TEMPORARY: Keep container alive for debugging
+CMD tail -f /dev/null
 
 # Run cache clear commands and start server
 # Note: We delay migration to ensure DB connection is ready
