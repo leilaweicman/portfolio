@@ -9,6 +9,7 @@ export default defineConfig({
             input: 'resources/js/app.jsx',
             refresh: true,
             buildDirectory: 'build',
+            useHttps: true,
         }),
         react(),
     ],
