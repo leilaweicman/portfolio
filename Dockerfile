@@ -54,10 +54,6 @@ RUN php artisan key:generate
 # Expose port 8000 to Railway
 EXPOSE 8000
 
-# Run cache clear commands and start server
-# Note: Delay migration to ensure DB connection is ready
-CMD php artisan config:clear \
-    && php artisan cache:clear \
-    && php artisan view:clear \
-    && php artisan migrate --force --seed \
+# Run migrations and start server
+CMD php artisan migrate --force \
     && php artisan serve --host=0.0.0.0 --port=8000
