@@ -59,5 +59,5 @@ EXPOSE 8000
 CMD php artisan config:clear \
     && php artisan cache:clear \
     && php artisan view:clear \
-    && php artisan migrate --force --seed || true \
+    && php artisan migrate --force --seed \
     && php artisan serve --host=0.0.0.0 --port=8000
