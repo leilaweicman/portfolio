@@ -7,6 +7,7 @@ import { createRoot } from 'react-dom/client';
 
 if (import.meta.env.PROD) {
     const pages = import.meta.glob('./Pages/**/*.jsx');
+    console.log('📦 Pages found by Vite:', Object.keys(pages));
     Object.values(pages).forEach(load => load());
 }
 
