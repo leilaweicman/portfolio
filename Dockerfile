@@ -24,9 +24,12 @@ RUN npm run build && \
 FROM php:8.2-cli
 
 # Install PHP extensions and system dependencies
+# RUN apt-get update && apt-get install -y \
+#     libzip-dev zip unzip curl git \
+#     && docker-php-ext-install zip pdo pdo_mysql
 RUN apt-get update && apt-get install -y \
-    libzip-dev zip unzip curl git \
-    && docker-php-ext-install zip pdo pdo_mysql
+    libzip-dev zip unzip curl git libpq-dev \
+    && docker-php-ext-install zip pdo pdo_pgsql
 
 # Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
