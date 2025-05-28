@@ -5,14 +5,9 @@ import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
 
-const pages = import.meta.glob('/resources/js/Pages/**/*.jsx');
-console.log('Pages found by Vite:', Object.keys(pages));
-
-if (import.meta.env.PROD) {
-    const pages = import.meta.glob('/resources/js/Pages/**/*.jsx');
-    console.log('Pages found by Vite in PROD:', Object.keys(pages));
-    Object.values(pages).forEach(load => load());
-}
+const pages = import.meta.env.PROD
+  ? import.meta.glob('/app/resources/js/Pages/**/*.jsx')
+  : import.meta.glob('./Pages/**/*.jsx');
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -20,8 +15,8 @@ createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) =>
         resolvePageComponent(
-            `./Pages/${name}.jsx`,
-            import.meta.glob('./Pages/**/*.jsx'),
+            import.meta.env.PROD ? `/app/resources/js/Pages/${name}.jsx` : `./Pages/${name}.jsx`,
+            pages
         ),
     setup({ el, App, props }) {
         const root = createRoot(el);
