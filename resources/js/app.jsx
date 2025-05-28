@@ -5,9 +5,12 @@ import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
 
+const pages = import.meta.glob('/resources/js/Pages/**/*.jsx');
+console.log('Pages found by Vite:', Object.keys(pages));
+
 if (import.meta.env.PROD) {
-    const pages = import.meta.glob('./Pages/**/*.jsx');
-    console.log('📦 Pages found by Vite:', Object.keys(pages));
+    const pages = import.meta.glob('/resources/js/Pages/**/*.jsx');
+    console.log('Pages found by Vite in PROD:', Object.keys(pages));
     Object.values(pages).forEach(load => load());
 }
 
