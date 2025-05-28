@@ -39,9 +39,6 @@ WORKDIR /app
 # Copy built app (from frontend stage)
 COPY --from=frontend /app /app
 
-# Copy environment file (you can override it via Railway variables)
-RUN cp .env.example .env
-
 # Install PHP dependencies (production only)
 RUN composer install --no-dev --optimize-autoloader
 
