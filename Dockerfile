@@ -49,7 +49,7 @@ RUN mkdir -p bootstrap/cache \
     && mkdir -p storage/logs
 
 # Generate Laravel key
-RUN php artisan key:generate
+RUN touch .env && php artisan key:generate
 
 # Expose port 8000 to Railway
 EXPOSE 8000
