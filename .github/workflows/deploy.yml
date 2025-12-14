@@ -1,0 +1,77 @@
+name: Deploy (Build on Server)
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 1. Copy Code to EC2
+      # We exclude heavy folders because they are built inside Docker
+      - name: Sync files to EC2
+        uses: easingthemes/ssh-deploy@main
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+          ARGS: "-rlgoDzvc -i --delete"
+          SOURCE: "./"
+          REMOTE_HOST: ${{ secrets.HOST }}
+          REMOTE_USER: ${{ secrets.USERNAME }}
+          TARGET: "/home/ubuntu/app/" 
+          EXCLUDE: ".git/, .github/, node_modules/, vendor/"
+
+      # 2. Build and Run on EC2
+      - name: Start Application
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd /home/ubuntu/app
+
+            # Create docker-compose.yml dynamically
+            # We use 'build: .' to tell Docker to use the Dockerfile in this folder
+            cat <<EOF > docker-compose.yml
+            services:
+              app:
+                build: .
+                restart: always
+                ports:
+                  - "80:8000"
+                environment:
+                  DB_CONNECTION: mysql
+                  DB_HOST: db
+                  DB_PORT: 3306
+                  DB_DATABASE: laravel
+                  DB_USERNAME: laravel_user
+                  DB_PASSWORD: secure_password
+                depends_on:
+                  - db
+
+              db:
+                image: mysql:8.0
+                restart: always
+                environment:
+                  MYSQL_DATABASE: laravel
+                  MYSQL_USER: laravel_user
+                  MYSQL_PASSWORD: secure_password
+                  MYSQL_ROOT_PASSWORD: root_secure_password
+                volumes:
+                  - db_data:/var/lib/mysql
+            volumes:
+              db_data:
+            EOF
+
+            # 3. Build and Start
+            # --build forces a rebuild of the image with your new code
+            docker compose up -d --build --remove-orphans
+
+            # 4. Run Migrations (Wait 10s for DB to be ready)
+            echo "Waiting for Database to start..."
+            sleep 10
+            docker compose exec -T app php artisan migrate --force
